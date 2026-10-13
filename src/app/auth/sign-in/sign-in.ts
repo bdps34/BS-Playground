@@ -1,37 +1,50 @@
-import { Component, inject, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
-import { email, form, FormField, FormRoot, required } from '@angular/forms/signals';
-import { AuthService } from '../../shared/auth/auth.service';
+import { NgOptimizedImage } from '@angular/common';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+import { FormField, email, form, required, submit } from '@angular/forms/signals';
+
+import { SignInFormModel } from '../models/sign-in-form.model';
+import { AuthService } from '../../services/auth.service';
+import { UserProfileService } from '../../services/user-profile.service';
 
 @Component({
   selector: 'sign-in',
-  imports: [RouterLink, FormField, FormRoot],
+  imports: [NgOptimizedImage, RouterLink, FormField],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './sign-in.html',
   styleUrl: './sign-in.scss',
 })
 export class SignIn {
-  private readonly authService = inject(AuthService);
+  private authService = inject(AuthService);
+  private userProfileService = inject(UserProfileService);
+  private router = inject(Router);
 
-  readonly showPassword = signal(false);
+  private model = signal<SignInFormModel>({ email: '', password: '' });
 
-  readonly loginModel = signal({ email: '', password: '' });
-
-  readonly loginForm = form(this.loginModel, (fieldPath) => {
-    required(fieldPath.email, { message: 'Email is required' });
-    email(fieldPath.email, { message: 'Enter a valid email address' });
-    required(fieldPath.password, { message: 'Password is required' });
-  }, {
-    submission: {
-      action: async () => {
-        await this.authService.signIn(
-          this.loginForm.email().value(),
-          this.loginForm.password().value(),
-        );
-      },
-    },
+  signInForm = form(this.model, (schema) => {
+    required(schema.email, { message: 'Email is required' });
+    email(schema.email, { message: 'Enter a valid email address' });
+    required(schema.password, { message: 'Password is required' });
   });
 
-  togglePassword() {
-    this.showPassword.update(visible => !visible);
+  passwordVisible = signal(false);
+
+  togglePasswordVisibility() {
+    this.passwordVisible.update((visible) => !visible);
+  }
+
+  async onSubmit(event: Event) {
+    event.preventDefault();
+    await submit(this.signInForm, async () => {
+      const { email, password } = this.model();
+      const success = await this.authService.signIn(email, password);
+
+      if (success) {
+        // authService writes straight to local storage and never touches this service (by
+        // design), so pick up whatever it just wrote here instead.
+        this.userProfileService.reload();
+        await this.router.navigateByUrl('/home');
+      }
+    });
   }
 }

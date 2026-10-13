@@ -1,7 +1,7 @@
 
 # About this repo
 
-This is an educational sample application for the Angular AI In Depth course, by the Angular University.
+This is BS Playground, a learning project: a simple chatbot built with Angular and a Node / Express backend.
 
 Make sure that all code uses the appropriate Angular best practices and examples as according to the Angular CLI MCP server.
 

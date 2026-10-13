@@ -1,7 +1,7 @@
-import { MessageRole } from './message-role.model.js';
+export type ChatRole = 'user' | 'assistant' | 'system';
 
 export type ChatMessage = {
   id: string;
-  role: MessageRole;
+  role: ChatRole;
   content: string;
 };

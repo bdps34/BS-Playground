@@ -1,4 +1,4 @@
-import { ChatMessage } from './chat-message.model.js';
+import { ChatMessage } from './chat-message.model';
 
 export type Conversation = {
   id: string;

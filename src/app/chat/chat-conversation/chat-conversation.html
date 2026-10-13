@@ -1,0 +1,44 @@
+<div class="chat-conversation">
+  <ul class="chat-conversation__messages" #messagesList>
+    @for (message of conversation().messages; track message.id) {
+      <li
+        class="chat-conversation__message"
+        [class.chat-conversation__message--user]="message.role === 'user'"
+        [class.chat-conversation__message--assistant]="message.role === 'assistant'"
+      >
+        @if (message.role === 'assistant') {
+          <span class="chat-conversation__avatar" aria-hidden="true"></span>
+        }
+        <p class="chat-conversation__bubble">{{ message.content }}</p>
+        @if (message.role === 'user') {
+          <span class="chat-conversation__avatar chat-conversation__avatar--user" aria-hidden="true">
+            <svg viewBox="0 0 24 24" focusable="false">
+              <path
+                d="M12 12a5 5 0 100-10 5 5 0 000 10zm0 2c-4.418 0-8 2.239-8 5v1a1 1 0 001 1h14a1 1 0 001-1v-1c0-2.761-3.582-5-8-5z"
+                fill="currentColor"
+              />
+            </svg>
+          </span>
+        }
+      </li>
+    }
+  </ul>
+
+  @if (isAwaitingReply()) {
+    <div class="chat-conversation__loading" role="status" aria-live="polite">
+      <loading-indicator [label]="''" />
+      <p class="chat-conversation__loading-text">It can take up to 20 seconds to get a reply.</p>
+      <p class="chat-conversation__loading-timer">{{ elapsedSeconds() }} seconds ...</p>
+    </div>
+  }
+
+  <chat-input
+    class="chat-conversation__input"
+    [disabled]="isAwaitingReply()"
+    (submitMessage)="onSubmit($event)"
+  />
+  <p class="chat-conversation__hint">
+    Give our AI as much context as possible, to get the best results. If an error occurs, please
+    try again after a few seconds.
+  </p>
+</div>

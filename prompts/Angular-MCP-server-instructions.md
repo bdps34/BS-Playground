@@ -2,8 +2,8 @@
 # Setting up the Angular MCP server
 
 Instead of relying on detailed context instructions via Claude.md or other files, there is a better way to guide an AI on how to write clean, modern Angular code.
-The Angular MCP Server is a bit like an AI-compatible "plugin" that lets AI coding assistants like Claude access directly 
-current Angular documentation and best practices directly. 
+The Angular MCP Server is a bit like an AI-compatible "plugin" that lets AI coding assistants like Claude access directly
+current Angular documentation and best practices directly.
 
 This allows the AI to:
 
@@ -20,10 +20,10 @@ the AI can look up the relevant Angular docs and produce code that better matche
 
 In summary:
 
-Angular MCP Server = a bridge between your AI coding agent and the official Angular knowledge base, 
+Angular MCP Server = a bridge between your AI coding agent and the official Angular knowledge base,
 so the agent writes more accurate, up-to-date Angular code.
 
-# Setting up the Angular MCP Server 
+# Setting up the Angular MCP Server
 
 - Edit the file  $HOME/.claude.json, $HOME being the root folder for your user in your file system
 

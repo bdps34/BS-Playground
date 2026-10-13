@@ -1,29 +1,41 @@
 import 'dotenv/config';
+import cors from 'cors';
 import express from 'express';
+import helmet from 'helmet';
 import pinoHttp from 'pino-http';
-import { rootRoute } from './routes/root.js';
-import { getConversationsHistory } from './routes/get-conversations-history.js';
-import { getChatConversation } from './routes/get-chat-conversation.js';
-import { startConversation } from './routes/start-conversation.js';
-import { continueConversation } from './routes/continue-conversation.js';
-import { signIn } from './routes/sign-in.js';
-import { signUp } from './routes/sign-up.js';
-import { requireAuth } from './middleware/auth.middleware.js';
+
+import { logger } from './logger';
+import { requireAuth } from './middleware/require-auth.middleware';
+import { continueConversationRoute } from './routes/continue-conversation.route';
+import { getChatConversationRoute } from './routes/get-chat-conversation.route';
+import { getChatHistoryRoute } from './routes/get-chat-history.route';
+import { rootRoute } from './routes/root.route';
+import { signInRoute } from './routes/sign-in.route';
+import { signUpRoute } from './routes/sign-up.route';
+import { startConversationRoute } from './routes/start-conversation.route';
 
 const app = express();
-const port = process.env['PORT'] ?? 9000;
+const port = Number(process.env['PORT']) || 9000;
+const corsOrigin = process.env['CORS_ORIGIN'];
 
-app.use(pinoHttp());
-app.use(express.json());
+app.use(helmet());
+
+if (corsOrigin) {
+  app.use(cors({ origin: corsOrigin }));
+  logger.info({ corsOrigin }, 'CORS enabled');
+}
+
+app.use(pinoHttp({ logger }));
+app.use(express.json({ limit: '10kb' }));
 
 app.get('/', rootRoute);
-app.get('/api/get-chat-history', requireAuth, getConversationsHistory);
-app.get('/api/get-chat-conversation/:id', requireAuth, getChatConversation);
-app.post('/api/start-conversation', requireAuth, startConversation);
-app.post('/api/continue-conversation', requireAuth, continueConversation);
-app.post('/api/sign-in', signIn);
-app.post('/api/sign-up', signUp);
+app.get('/api/get-chat-history', requireAuth, getChatHistoryRoute);
+app.get('/api/get-chat-conversation/:id', requireAuth, getChatConversationRoute);
+app.post('/api/start-conversation', requireAuth, startConversationRoute);
+app.post('/api/continue-conversation', requireAuth, continueConversationRoute);
+app.post('/api/sign-in', signInRoute);
+app.post('/api/sign-up', signUpRoute);
 
 app.listen(port, () => {
-  console.log(`Server listening on http://localhost:${port}`);
+  logger.info(`Server listening on http://localhost:${port}`);
 });

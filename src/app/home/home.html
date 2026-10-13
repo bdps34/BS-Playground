@@ -1,30 +1,22 @@
-<div class="layout" [class.sidebar-open]="!collapsed()">
-  <div class="sidebar-backdrop" (click)="toggleSidebar()"></div>
-  <side-nav
-    [collapsed]="collapsed()"
-    [conversations]="conversations()"
-    [activeConversationId]="activeConversationId()"
-    (toggle)="toggleSidebar()"
-    (conversationSelected)="selectConversation($event)"
-    (newChat)="newChat()"
+<div class="home">
+  <sidebar
+    [conversations]="conversationSummaries()"
+    [selectedConversationId]="selectedConversation()?.id ?? null"
+    (selectConversation)="selectConversation($event)"
+    (newChat)="startNewChat()"
     (logout)="logout()"
   />
-  <main class="main-content">
-    <button class="mobile-menu-btn" (click)="toggleSidebar()" aria-label="Open menu">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <line x1="3" y1="6" x2="21" y2="6" />
-        <line x1="3" y1="12" x2="21" y2="12" />
-        <line x1="3" y1="18" x2="21" y2="18" />
-      </svg>
-    </button>
-    @if (activeConversation(); as conversation) {
-      <conversation-thread
+
+  <main class="home__main">
+    @if (selectedConversation(); as conversation) {
+      <chat-conversation
         [conversation]="conversation"
-        [isLoading]="isLoading()"
-        (messageSent)="sendMessage($event)"
+        [isAwaitingReply]="awaitingReply()"
+        [elapsedSeconds]="elapsedSeconds()"
+        (submitMessage)="sendMessage($event)"
       />
     } @else {
-      <initial-state (messageSent)="sendMessage($event)" />
+      <chat-initial-state (submitMessage)="sendMessage($event)" />
     }
   </main>
 </div>

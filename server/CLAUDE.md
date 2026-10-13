@@ -13,10 +13,11 @@
 
 - load environment variables from an environment file .env using the dotenv package
 
-- use the package pino for logging. Add appropriate logging to all code.
+- use the package pino for logging. Added appropriate logging to all code.
 
 - don't use the OpenAI SDK Node wrapper to interact with their API. Instead, build plain HTTP requests directly.
 
-- authentication is based on email and password only, hashed/salted passwords. 
+- authentication is based on email and password only, hashed/salted passwords. The implementation should be fully functional and usable,
+  even though there is no database storage.
 
-- create an initial mock user on db-data.ts, like email test@angular-university.io with password Angular123  
+- create an initial mock user on db-data.ts, with email test@test.io and password test
