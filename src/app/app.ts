@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
-import { GlobalLoadingIndicator } from './global-loading-indicator/global-loading-indicator';
-import { UserMessages } from './user-messages/user-messages';
+import { GlobalLoadingIndicator } from './core/layout/global-loading-indicator/global-loading-indicator';
+import { UserMessages } from './core/layout/user-messages/user-messages';
 
 @Component({
   selector: 'root',

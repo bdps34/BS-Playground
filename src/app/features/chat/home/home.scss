@@ -1,0 +1,23 @@
+@use 'styles/breakpoints' as bp;
+@use 'styles/layout';
+
+:host {
+  display: block;
+  height: 100vh;
+}
+
+.home {
+  @include layout.app-shell;
+
+  &__main {
+    flex: 1;
+    display: flex;
+    min-width: 0;
+    height: 100%;
+    padding: 16px;
+
+    @include bp.mobile-down {
+      padding: 12px;
+    }
+  }
+}
