@@ -1,0 +1,29 @@
+<div class="chat-input" [class.chat-input--disabled]="disabled()">
+  <svg class="chat-input__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <path
+      d="M10 4a6 6 0 104.472 10.032l4.248 4.248a1 1 0 001.415-1.415l-4.248-4.248A6 6 0 0010 4zm-4 6a4 4 0 118 0 4 4 0 01-8 0z"
+      fill="currentColor"
+    />
+  </svg>
+  <input
+    class="chat-input__field"
+    type="text"
+    [value]="value()"
+    [placeholder]="placeholder()"
+    [disabled]="disabled()"
+    aria-label="Chat message"
+    (input)="onInput($event)"
+    (keydown.enter)="onEnter($event)"
+  />
+  <button
+    class="chat-input__submit"
+    type="button"
+    aria-label="Send message"
+    [disabled]="disabled() || !value().trim()"
+    (click)="submit()"
+  >
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M12 4l-7 7h4v9h6v-9h4z" fill="currentColor" />
+    </svg>
+  </button>
+</div>

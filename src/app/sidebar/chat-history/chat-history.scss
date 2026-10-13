@@ -1,0 +1,55 @@
+:host {
+  display: block;
+}
+
+.chat-history {
+  &__heading {
+    margin: 8px 0;
+    padding: 0 8px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-text-secondary);
+  }
+
+  &__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  &__item {
+    display: block;
+    width: 100%;
+    padding: 8px;
+    border: none;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--color-text-secondary);
+    font: inherit;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+
+    &:hover {
+      background: var(--color-surface);
+      color: var(--color-text-primary);
+    }
+
+    &--active {
+      background: var(--color-surface);
+      color: var(--color-text-primary);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--color-accent);
+      outline-offset: 2px;
+    }
+  }
+}

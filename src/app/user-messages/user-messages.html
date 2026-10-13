@@ -1,0 +1,30 @@
+@if (messages().length > 0) {
+  <div class="user-messages" role="status" aria-live="polite">
+    @for (message of messages(); track message.id) {
+      <div
+        class="user-messages__item"
+        [class.user-messages__item--error]="message.type === 'error'"
+        [class.user-messages__item--warning]="message.type === 'warning'"
+        [class.user-messages__item--info]="message.type === 'info'"
+        [class.user-messages__item--success]="message.type === 'success'"
+      >
+        <p class="user-messages__text">{{ message.text }}</p>
+        <button
+          type="button"
+          class="user-messages__close"
+          (click)="dismiss(message.id)"
+          aria-label="Dismiss message"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path
+              d="M6 6l12 12M18 6L6 18"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+          </svg>
+        </button>
+      </div>
+    }
+  </div>
+}

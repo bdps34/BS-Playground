@@ -1,0 +1,80 @@
+:host {
+  display: block;
+}
+
+.user-messages {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+.user-messages__item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 12px 48px 12px 16px;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  font-family: var(--font-family-base);
+
+  &--error {
+    background: var(--color-status-error-bg);
+    color: var(--color-status-error-text);
+  }
+
+  &--warning {
+    background: var(--color-status-warning-bg);
+    color: var(--color-status-warning-text);
+  }
+
+  &--info {
+    background: var(--color-status-info-bg);
+    color: var(--color-status-info-text);
+  }
+
+  &--success {
+    background: var(--color-status-success-bg);
+    color: var(--color-status-success-text);
+  }
+}
+
+.user-messages__text {
+  margin: 0;
+  text-align: center;
+}
+
+.user-messages__close {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: var(--radius-sm);
+
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  &:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+}

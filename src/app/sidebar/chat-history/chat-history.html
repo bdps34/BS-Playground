@@ -1,0 +1,18 @@
+<div class="chat-history">
+  <h2 class="chat-history__heading">Recent</h2>
+  <ul class="chat-history__list">
+    @for (conversation of conversations(); track conversation.id) {
+      <li>
+        <button
+          class="chat-history__item"
+          type="button"
+          [class.chat-history__item--active]="conversation.id === selectedId()"
+          [attr.aria-current]="conversation.id === selectedId() ? 'true' : null"
+          (click)="conversationSelected.emit(conversation.id)"
+        >
+          {{ conversation.title }}
+        </button>
+      </li>
+    }
+  </ul>
+</div>

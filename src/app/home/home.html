@@ -1,0 +1,22 @@
+<div class="home">
+  <sidebar
+    [conversations]="conversationSummaries()"
+    [selectedConversationId]="selectedConversation()?.id ?? null"
+    (selectConversation)="selectConversation($event)"
+    (newChat)="startNewChat()"
+    (logout)="logout()"
+  />
+
+  <main class="home__main">
+    @if (selectedConversation(); as conversation) {
+      <chat-conversation
+        [conversation]="conversation"
+        [isAwaitingReply]="awaitingReply()"
+        [elapsedSeconds]="elapsedSeconds()"
+        (submitMessage)="sendMessage($event)"
+      />
+    } @else {
+      <chat-initial-state (submitMessage)="sendMessage($event)" />
+    }
+  </main>
+</div>
